@@ -1,0 +1,42 @@
+{% extends 'todolist/basic.html' %}
+
+{% block title %} PlanIt - About us {% endblock title %}
+
+{% block css %}
+    #grad {
+        height:460px;
+        background-color: black; /* For browsers that do not support gradients */
+        background-image: linear-gradient(to bottom right, #78fdff, #bc90f5, #fed6ff);
+        background-size: 800% 800%;
+        animation: gradientFlow 5s ease infinite;
+    }
+    @keyframes gradientFlow {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+    .jumbotron {
+        border-radius: 0 0 40px 40px;
+    }
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron" id="grad" style="background-color: #fffce0;">
+        <br><div class="container">
+            <h1 class="display-3 text-center" style="color:black;"><b>About Us</b></h1><hr>
+            <p style="color:black;"><i>Welcome to PlanIt, the ultimate to-do-list app that will revolutionize your productivity and streamline your daily tasks. With its user-friendly interface and powerful features, PlanIt is your go-to tool for effective task management. Stay on top of your game by creating multiple lists for different areas of your life—work, personal, hobbies, and more. PlanIt allows you to effortlessly prioritize tasks, set due dates, and assign reminders, ensuring that nothing falls through the cracks. The app's intelligent algorithm analyzes your task history and suggests optimal scheduling, helping you maximize your efficiency and achieve your goals. Collaborate seamlessly with colleagues, friends, or family members by sharing lists and assigning tasks to specific individuals. With PlanIt, communication and coordination have never been easier. Stay motivated and inspired by setting milestones and tracking your progress. The app provides insightful analytics and visual representations of your accomplishments, allowing you to celebrate your achievements along the way.</i></p>
+            <p style="color:black;"><i>Whether you prefer a minimalist view or a comprehensive calendar layout, PlanIt offers customizable options to suit your preferences. Sync your tasks across devices, ensuring you're always up to date no matter where you are. With PlanIt as your trusted companion, you'll experience a newfound sense of control and productivity. Embrace the power of efficient task management and conquer your to-do list with ease. Download PlanIt today and unlock your full potential.</i></p>
+            <p><a class="btn btn-outline-dark btn-lg mb-3" href="/" role="button">&laquo; Go back to homepage</a></p>
+        </div>
+    </div>
+
+    <footer class="container">
+        <p style="color:#919191;">&copy; Company Estd 2023</p>
+    </footer>
+{% endblock %}

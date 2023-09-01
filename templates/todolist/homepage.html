@@ -1,0 +1,89 @@
+{% extends 'todolist/basic.html' %}
+
+{% block title %} PlanIt - Home {% endblock %}
+
+{% block css %}
+    #grad1 {
+        height:400px;
+        background-color: black;
+        background-image: linear-gradient(to bottom right, #78fdff, #bc90f5, #fed6ff);
+        background-size: 800% 800%;
+        animation: gradientFlow 5s ease infinite;
+    }
+    #grad2 {
+        height:50px;
+        background-color: black;
+        background-image: linear-gradient(to bottom right, #9cfffc, #be9cff, #ff9ce8);
+        background-size: 800% 800%;
+        animation: gradientFlow 5s ease infinite;
+    }
+    @keyframes gradientFlow {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+    .box {
+        background-color: white;
+        transition: all 0.3s ease;
+    }
+    .box:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+    }
+    .jumbotron {
+        border-radius: 0 0 40px 40px;
+    }
+{% endblock %}
+
+{% block content %}
+    <div id="grad1" class="jumbotron">
+        <div class="container">
+            <br><h1 class="display-3 text-center" style="color:black;"><b>Welcoming you to PlanIt</b></h1><hr class="my-4">
+            <p class="lead" style="color:black;">Introducing PlanIt, your ultimate companion for efficient task management and productivity. With PlanIt, organizing your to-do list has never been easier. This innovative application is designed to streamline your daily routines, ensuring you stay on top of your responsibilities and achieve your goals effortlessly. From personal tasks to professional projects, PlanIt empowers you with a user-friendly interface and a comprehensive set of features that allow you to prioritize, schedule, and track your tasks with precision. Say goodbye to the chaos of scattered notes and hello to a well-structured plan. Experience the power of PlanIt and unlock your true potential today.</p>
+            {% if user.is_authenticated %}
+                <a class="btn btn-outline-dark btn-lg mb-3" href="/allTasks" role="button">View all tasks &raquo;</a>
+            {% endif %}
+        </div>
+    </div>
+    {% if user.is_authenticated %}
+        <div class="container">
+            <div class="text-center mt-5">
+                <h2>These are the tasks you have left!</h2>
+                <p class="lead">Hope you'll finish them by today :)</p>
+            </div>
+            <div class="row">
+                {% for task in completedTasks %}
+                    <div class="col-md-6 mt-5">
+                        <div class="card box">
+                            <div id="grad2" class="card-header">
+                                <h4>Task - {{ forloop.counter }}</h4>
+                            </div>
+                            <div class="card-body">
+                                <h2 class="card-title"><b>{{ task.taskTitle }}</b></h2>
+                                <p class="card-text mt-3"><b>Note to self: </b>{{ task.taskDescription }}</p>
+                                {% if task.taskCompleted == True %}
+                                    <p><b>Status: </b>Completed</p>
+                                {% else %}
+                                    <p><b>Status: </b>Yet to complete</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div><br>
+    {% else %}
+        <div class="container">
+            <div class="text-center mt-5">
+                <h2>Please Log in / Sign up first!</h2>
+                <p class="lead">Hope you'll love our project :)</p>
+            </div>
+        </div><br>
+    {% endif %}
+{% endblock %}

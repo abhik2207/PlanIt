@@ -1,0 +1,86 @@
+{% extends 'todolist/basic.html' %}
+
+{% block title %} PlanIt - All tasks {% endblock %}
+
+{% block css %}
+    #grad1 {
+        height:220px;
+        background-color: black; /* For browsers that do not support gradients */
+        background-image: linear-gradient(to bottom right, #78fdff, #bc90f5, #fed6ff);
+        background-size: 800% 800%;
+        animation: gradientFlow 5s ease infinite;
+    }
+    .grad2 {
+        height:50px;
+        background-color: black; /* For browsers that do not support gradients */
+        background-image: linear-gradient(to bottom right, #78fdff, #bc90f5, #fed6ff);
+        background-size: 800% 800%;
+        animation: gradientFlow 5s ease infinite;
+    }
+    @keyframes gradientFlow {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+    .box {
+        background-color: white;
+        transition: all 0.3s ease;
+    }
+    .box:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+    }
+    .jumbotron {
+        border-radius: 0 0 40px 40px;
+    }
+{% endblock %}
+
+{% block content %}
+<div class="jumbotron" id="grad1" style="background-color: #fffce0;">
+    <br><div class="container">
+        <h1 class="display-3 text-center" style="color:black;"><b>All tasks</b></h1><hr>
+    </div>
+    <div class="container text-center">
+        <blockquote>
+            <i><q>Until you value yourself, you will not value your time. Until you value your time, you will not do anything with it.</q></i><br><pre>                                                                                       -M. Scott Peck</pre>
+        </blockquote><br><br>
+    </div>
+</div>
+<div class="container"><br>
+    <div class="row my-2">
+        {% for task in allTasks %}
+            <div class="col-md-6 mt-5">
+                <div class="card box">
+                    {% if task.taskCompleted == True %}
+                        <div class="card-header grad2" style="background-color:#b3ffb6">
+                            <h4>Task - {{ forloop.counter }}</h4>
+                        </div>
+                        <div class="card-body">
+                            <h2 class="card-title"><b>{{ task.taskTitle }}</b></h2>
+                            <p class="card-text mt-3"><b>Note to self: </b>{{ task.taskDescription }}</p>
+                            <p style="color:#00bf0d;font-size:120%"><b>Status: </b><i><s>Completed</s></i></p>
+                            <a href="/editTask/{{task.taskID}}" class="btn btn-outline-dark btn-sm">Edit task &raquo;</a>
+                        </div>
+                    {% else %}
+                        <div class="card-header grad2" style="background-color:#ffb3b3">
+                            <h4>Task - {{ forloop.counter }}</h4>
+                        </div>
+                        <div class="card-body">
+                            <h2 class="card-title"><b>{{ task.taskTitle }}</b></h2>
+                            <p class="card-text mt-3"><b>Note to self: </b>{{ task.taskDescription }}</p>
+                            <p style="color:#bf0000;font-size:120%"><b>Status: </b><i>Yet to complete</i></p>
+                            <a href="/editTask/{{task.taskID}}" class="btn btn-outline-dark btn-sm">Edit task &raquo;</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div><br>
+{% endblock %}

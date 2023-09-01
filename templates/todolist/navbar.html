@@ -1,0 +1,141 @@
+<nav class="navbar navbar-light" style="background-color:#1c1c1c;">
+    <div class="container-fluid">
+        <a class="navbar-brand gradient-text" href="#"><h2 style="color:#000000;font-family:verdana;"><b><span>PLANIT</span></b></h2></a>
+        {% if user.is_authenticated %}
+            <ul class="navbar-nav" style="margin-left:60%;">
+                <li class="nav-item align-right">
+                    <a class="gradient-text" href="#" role="button" style="color:#ffffff;margin-right:15px;font-size:25px;"><b>Welcome, {{ request.user|truncatechars:9 }}</b></a>
+                    <a class="btn btn-outline-light gradient-button" href="/logout">Logout</a>
+                </li>
+            </ul>
+        {% else %}
+            <ul class="navbar-nav" style="margin-left:75%;">
+                <li>
+                    <button type="button" class="btn btn-outline-light my-2 gradient-button" data-bs-toggle="modal" data-bs-target="#signupModal"  style="margin-right: 5px;">
+                        Sign up
+                    </button>
+                    <button type="button" class="btn btn-outline-light my-2 gradient-button" data-bs-toggle="modal" data-bs-target="#loginModal" style="margin-right: 10px;">
+                        Log in
+                    </button>
+                </li>
+            </ul>
+        {% endif %}
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end" style="background-color:#1c1c1c;" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h3 class="offcanvas-title gradient-text" id="offcanvasNavbarLabel">PLANIT</h3>
+                <button type="button" id="close" class="btn btn-active btn-sm" data-bs-dismiss="offcanvas" aria-label="Close">&#10006;</button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <div class="d-grid gap-2">
+                            <a class="btn btn-outline-light my-2 gradient-button" role="button" aria-current="page" href="/"><b>Home</b></a>
+                        </div>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <div class="d-grid gap-2">
+                                <a class="btn btn-outline-light my-2 gradient-button" role="button" href="/addTask"><b>Add a new task</b></a>
+                            </div>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <div class="d-grid gap-2">
+                            <a class="btn btn-outline-light my-2 gradient-button" role="button" href="/contact"><b>Contact us</b></a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="d-grid gap-2">
+                            <a class="btn btn-outline-light my-2 gradient-button" role="button" href="/about"><b>About us</b></a>
+                        </div>
+                    </li>
+                </ul>
+                {% if user.is_authenticated %}
+                    <form method="get" action="/search" class="d-flex mt-3" role="search">
+                        <input class="form-control me-2" style="width:300px; height:40px;" type="search" placeholder="Search" id="query" name="query" aria-label="Search">
+                        <button class="btn btn-outline-light my-2 gradient-button btn-sm" type="submit"><b>Search</b></button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="modal fade" id="signupModal" name="signupModal" tabindex="-1" aria-labelledby="signupModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header modal-gradient">
+                <h5 class="modal-title" id="signupTitle">Sign up</h5>
+                <button type="button" class="close btn btn-dark btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="background-color: #262626;">
+                <form action="/signup" method="post">
+                    <div class="form-group">
+                        <label for="signupUsername"style="color:#ffffff">Username</label>
+                        <input type="text" class="form-control" id="signupUsername" name="signupUsername" placeholder="Create an unique username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fname" style="color:#ffffff; margin-top:15px">First Name</label>
+                        <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter your First Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lname" style="color:#ffffff; margin-top:15px">Last Name</label>
+                        <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter your Last Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" style="color:#ffffff; margin-top:15px">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pass1" style="color:#ffffff; margin-top:15px">Password</label>
+                        <input type="password" class="form-control" id="pass1" name="pass1" placeholder="Create a strong password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pass2" style="color:#ffffff; margin-top:15px">Confirm Password</label>
+                        <input type="password" class="form-control" id="pass2" name="pass2" placeholder="Re-enter your password" required>
+                    </div>
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-light gradient-button" style="margin-top:20px;">Sign up</button>
+                </form>
+            </div>
+            <div class="modal-footer" style="background-color: #262626;">
+                <small style="color:#9c9c9c;"><p>Sign up to Like, Comment and Share our Blogs!</p></small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="loginModal" name="loginModal" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header modal-gradient">
+                <h5 class="modal-title" id="loginTitle">Log in</h5>
+                <button type="button" class="close btn btn-dark btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div style="background-color: #262626;" class="modal-body">
+                <form action="/login" method="post">
+                    <div class="form-group">
+                        <label for="loginUsername" style="color:#ffffff;">Username</label>
+                        <input type="text" class="form-control" id="loginUsername" name="loginUsername" placeholder="Enter your username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword" style="color:#ffffff; margin-top:15px">Password</label>
+                        <input type="password" class="form-control" id="loginPassword" name="loginPassword" placeholder="Enter your password" required>
+                    </div>
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-light gradient-button" style="margin-top:20px;">Log in</button>
+                </form>
+            </div>
+            <div class="modal-footer" style="background-color: #262626;">
+                <small style="color:#9c9c9c;"><p>Login to your PlanIt account!</p></small>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,83 @@
+{% extends 'todolist/basic.html' %}
+
+{% block title %} PlanIt - All tasks {% endblock %}
+
+{% block css %}
+    #grad1 {
+        height:200px;
+        background-color: black; /* For browsers that do not support gradients */
+        background-image: linear-gradient(to bottom right, #78fdff, #bc90f5, #fed6ff);
+        background-size: 800% 800%;
+        animation: gradientFlow 5s ease infinite;
+    }
+    #grad2 {
+        height:50px;
+        background-color: black; /* For browsers that do not support gradients */
+        background-image: linear-gradient(to bottom right, #78fdff, #bc90f5, #fed6ff);
+        background-size: 800% 800%;
+        animation: gradientFlow 5s ease infinite;
+    }
+    @keyframes gradientFlow {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+    .box {
+        background-color: white;
+        transition: all 0.3s ease;
+    }
+    .box:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+    }
+    .jumbotron {
+        border-radius: 0 0 40px 40px;
+    }
+{% endblock %}
+
+{% block content %}
+<div class="jumbotron" id="grad1" style="background-color: #fffce0;">
+    <br><div class="container">
+        <h1 class="display-3 text-center" style="color:black;"><b>Search Results</b></h1><hr>
+    </div>
+</div>
+<div class="container"><br>
+    {% if searchResults|length < 1 %}
+    <h3>No search results :(</h3>
+    <p>Your search query - <b> {{ query }} </b> - did not match any documents.</p>
+    <p>Suggestion:
+    <ul>
+    <li><p><b>Make sure you spelled everything correctly</b></p></li>
+    <li><p><b>Try different keywords</b></p></li>
+    <li><p><b>Try fewer keywords</b></p></li>
+    <li><p><b>Try more general keywords</b></p></li>
+    </ul>
+    {% endif %}
+    <div class="row">
+        {% for task in searchResults %}
+            <div class="col-md-6 mt-5">
+                <div class="card box">
+                    <div class="card-header" id="grad2">
+                        <h4>Task - {{ forloop.counter }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title"><b>{{ task.taskTitle }}</b></h3>
+                        <p class="card-text mt-3"><b>Note to self: </b>{{ task.taskDescription }}</p>
+                        {% if task.taskCompleted == True %}
+                            <p><b>Status: </b>Completed</p>
+                        {% else %}
+                            <p><b>Status: </b>Yet to complete</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div><br>
+{% endblock %}
